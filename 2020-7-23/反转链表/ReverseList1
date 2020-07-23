@@ -1,0 +1,23 @@
+public class Solution { 
+	public ListNode ReverseList(ListNode head) { 
+		if(head == null || head.next == null){ 
+			return head; 
+		}
+		//不带头结点，至少有2个节点 
+		ListNode first = head; //指向第一个节点 
+		ListNode second = first.next; //指向第二个节点 
+		ListNode third = second.next;//指向第三个节点，可能为null 
+		while(third != null){ 
+			//翻转 
+			second.next = first; 
+			//指针整体后移 
+			first = second; 
+			second = third; 
+			third = third.next; 
+		}
+		second.next = first;//当传入的链表只有两个节点 or 上述翻转结束时，最后一个节点并 未翻转 
+		head.next = null;//曾经的第一个节点，next并不是null，设置一下 
+		head = second; //头指针指向最后一个节点 
+		return head; 
+	}
+}
