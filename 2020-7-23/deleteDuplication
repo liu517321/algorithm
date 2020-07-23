@@ -1,0 +1,34 @@
+public class Solution { 
+	public ListNode deleteDuplication(ListNode pHead){ 
+		if(pHead == null){ 
+			return pHead; 
+		}
+		ListNode head = new ListNode(0);
+		head.next = pHead;
+		ListNode prev = head; 
+		ListNode last = prev.next; 
+		while(last != null){
+			//last永远在前面
+			//先找到重复的开始 
+			while(last.next != null && last.val != last.next.val){ 
+				prev = prev.next; 
+				last = last.next; 
+			}
+			//在找到重复的范围 
+			while(last.next != null && last.val == last.next.val){ 
+				last = last.next; 
+			}
+			//走到这里结果一共有三种,注意：prev永远指向的是前驱有效起始节点：
+			//1. last.next != null 并且 (prev, last] 限定了一段重复范围，此时进行去重 
+			//2. last.next == null && (prev, last] 限定了一段重复范围，此时进行去重， 最后相当于prev->next = nullptr 
+			//3. last.next == null && prev.next == last,这说明，从本次循环开始，大家 都不相同，就不需要进行去重，这个是特殊情况 
+			if(prev.next != last){ 
+				//说明是一段范围，可以去重 
+				prev.next = last.next; 
+			}
+			last = last.next; 
+			//走这一步，就是为了保证恢复的和最开始一致 
+		}
+		return head.next; 
+	} 
+}
