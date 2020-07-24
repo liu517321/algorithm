@@ -1,0 +1,26 @@
+import java.util.ArrayList; 
+import java.util.Stack; 
+
+public class Solution { 
+	public boolean IsPopOrder(int [] pushA,int [] popA) { 
+		if(pushA == null || popA == null || pushA.length == 0 || popA.length == 0 || pushA.length != popA.length){ 
+			return false; 
+		}
+		Stack<Integer> st = new Stack<>();
+		int i = 0; 
+		int j = 0; 
+		for( ; i < pushA.length; i++){ 
+			//如果该条件不满足，就要一直入栈 
+			//如果该条件满足，就要一直出栈
+			//pushV代表对应的入栈逻辑，popV代表对应的出栈逻辑 
+			//两个元素相等，代表入栈逻辑结束，出栈逻辑开始，想想为什么? 
+			st.push(pushA[i]); 
+			while(!st.empty() && st.peek() == popA[j]){
+				//入栈逻辑结束，开始出栈逻辑 
+				st.pop(); 
+				j++; 
+			} 
+		}
+		return st.empty(); 
+	}
+}
